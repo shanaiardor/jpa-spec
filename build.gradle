@@ -27,10 +27,10 @@ java {
 idea {
     project {
         vcs = 'Git'
-        jdkName = '17'
+        jdkName = javaBaseline
     }
     module {
-        jdkName = '17'
+        jdkName = javaBaseline
     }
 }
 
@@ -117,9 +117,9 @@ jacocoTestCoverageVerification {
 }
 
 license {
-    header rootProject.file('config/copyright/copyright.header')
+    header = rootProject.file('config/copyright/copyright.header')
     excludes(['**/*.properties', '**/*.yml', '**/*.yaml', '**/*.md', '**/*.xml'])
-    strictCheck true
+    strictCheck = true
 }
 
 check.dependsOn jacocoTestCoverageVerification
@@ -165,9 +165,9 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.java
-            groupId 'com.github.wenhao'
-            artifactId 'jpa-spec'
-            version '4.0.0-SNAPSHOT'
+            groupId = 'com.github.wenhao'
+            artifactId = 'jpa-spec'
+            version = project.version
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'A JPA Query By Specification framework.')
@@ -183,12 +183,16 @@ publishing {
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
 signing {
-    required { isReleaseVersion && gradle.taskGraph.hasTask('publish') }
+    required = { isReleaseVersion && gradle.taskGraph.hasTask('publish') }
     sign publishing.publications.maven
 }
 
-copy {
-    from './config/githooks/'
-    into './.git/hooks/'
-    fileMode 0755
+if (file('.git/hooks').exists()) {
+    copy {
+        from './config/githooks/'
+        into './.git/hooks/'
+        filePermissions {
+            unix('0755')
+        }
+    }
 }

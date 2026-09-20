@@ -118,4 +118,34 @@ public class JoinTest {
         assertThat(phones.size()).isEqualTo(2);
     }
 
+    @Test
+    public void should_be_able_to_find_by_equal_join_with_multiple_values() {
+        Person jack = new PersonBuilder()
+                .name("Jack")
+                .age(18)
+                .phone("HuaWei", "13600000000")
+                .build();
+        Person eric = new PersonBuilder()
+                .name("Eric")
+                .age(20)
+                .phone("Apple", "13800000000")
+                .build();
+        Person alex = new PersonBuilder()
+                .name("Alex")
+                .age(30)
+                .phone("Samsung", "13700000000")
+                .build();
+        personRepository.save(jack);
+        personRepository.save(eric);
+        personRepository.save(alex);
+
+        Specification<Phone> specification = Specifications.<Phone>and()
+                .eq("person.name", "Jack", "Eric")
+                .build();
+
+        List<Phone> phones = phoneRepository.findAll(specification);
+
+        assertThat(phones.size()).isEqualTo(2);
+    }
+
 }

@@ -116,7 +116,7 @@ public class PredicateTest {
         // when
         Specification<Person> specification = Specifications.<Person>and()
                 .between("age", 10, 35)
-                .predicate(StringUtils.isNotBlank(jack.getName()), (Specification<Phone>) (root, query, cb) -> {
+                .predicate(StringUtils.isNotBlank(jack.getName()), (Specification<Person>) (root, query, cb) -> {
                     Join address = root.join("addresses", JoinType.LEFT);
                     return cb.equal(address.get("street"), "Chengdu");
                 })

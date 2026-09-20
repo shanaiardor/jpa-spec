@@ -48,7 +48,7 @@ public class NotEqualSpecification<T> extends AbstractSpecification<T> {
         }
         Predicate[] predicates = new Predicate[values.length];
         for (int i = 0; i < values.length; i++) {
-            predicates[i] = getPredicate(root, cb, values[i], field);
+            predicates[i] = getPredicate(from, cb, values[i], field);
         }
         return cb.or(predicates);
     }
