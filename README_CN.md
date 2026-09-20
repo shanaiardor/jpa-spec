@@ -23,29 +23,37 @@ but it still productive and easily understandable. Build on Spring Data JPA and 
 ### 功能
 
 <!--
-* Compatible with Spring Data JPA and JPA 2.1 interface.
+* Compatible with Spring Data JPA 3.x and Jakarta Persistence 3.1.
+* Requires **JDK 17** or later.
 * Equal/NotEqual/Like/NotLike/In/NotIn support multiple values, Equal/NotEqual support **Null** value.
 * Each specification support join query(left joiner).
 * Support custom specification.
 * Builder style specification creator.
 * Support pagination and sort builder.
 -->
-* 兼容 Spring Data JAP 和 JPA 2.1 接口。
+* 兼容 Spring Data JPA 3.x 和 Jakarta Persistence 3.1。
+* 需要 **JDK 17** 或更高版本。
 * Equal/NotEqual/Like/NotLike/In/NotIn 支持多参数, Equal/NotEqual 支持 **Null** 值。
 * 每个条件查询支持关联查询(左连接)。
 * 支持自定义条件查询。
 * 条件查询构建器。
 * 支持分页和排序。
 
+### 运行要求
+
+* JDK 17+
+* Spring Data JPA 3.x（Spring Boot 3.x）
+* Jakarta Persistence 3.1（`jakarta.persistence.*`，不再使用 `javax.persistence.*`）
+
 ### Gradle
 
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.github.wenhao:jpa-spec:3.2.5'
+    implementation 'com.github.wenhao:jpa-spec:4.0.0'
 }
 ```
 
@@ -55,11 +63,13 @@ dependencies {
 <dependency>
     <groupId>com.github.wenhao</groupId>
     <artifactId>jpa-spec</artifactId>
-    <version>3.2.5</version>
+    <version>4.0.0</version>
 </dependency>
 ```
 
 ### 构建
+
+需要 JDK 17 或更高版本。
 
 ```
 ./gradlew clean build
@@ -71,11 +81,11 @@ dependencies {
 <dependency>
     <groupId>com.github.wenhao</groupId>
     <artifactId>jpa-spec</artifactId>
-    <version>3.2.5</version>
+    <version>4.0.0</version>
     <exclusions>
         <exclusion>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </exclusion>
         <exclusion>
             <groupId>org.springframework.boot</groupId>
@@ -132,7 +142,7 @@ public Page<Person> findAll(SearchRequest request) {
             .like("nickName", "%og%", "%me")
             .build();
 
-    return personRepository.findAll(specification, new PageRequest(0, 15));
+    return personRepository.findAll(specification, PageRequest.of(0, 15));
 }
 ```
 

@@ -64,6 +64,7 @@ public class PersonBuilder {
         Phone phone = new Phone();
         phone.setBrand(brand);
         phone.setNumber(number);
+        phone.setPerson(this.person);
         this.person.getPhones().add(phone);
         return this;
     }
