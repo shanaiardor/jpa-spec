@@ -20,6 +20,15 @@
     <!-- 检查文件中是否含有'\t' -->
     <module name="FileTabCharacter"/>
 
+    <!-- 行长度不超过150 -->
+    <module name="LineLength">
+        <property name="max" value="150"/>
+        <property name="severity" value="error"/>
+        <property name="fileExtensions" value="java"/>
+        <property name="ignorePattern"
+                  value="^(package .*;\s*)|(import .*;\s*)|( *\* *https?://.*)$"/>
+    </module>
+
     <!-- 各种各样的其他检查 -->
     <module name="RegexpSingleline">
         <!-- Checks that FIXME is not used in comments.  TODO is preferred.
@@ -43,8 +52,6 @@
         <!-- 使filecontentolder允许我们反过来对压制评论 -->
         <!--<module token="FileContentsHolder" />-->
 
-        <property name="cacheFile" value="checkstyle.cache"/>
-
         <property name="tabWidth" value="4"/>
 
         <!-- only check java files. -->
@@ -54,14 +61,10 @@
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
 
         <module name="JavadocMethod">
-            <property name="scope" value="protected"/>
+            <property name="accessModifiers" value="protected"/>
             <property name="severity" value="warning"/>
-            <property name="allowMissingJavadoc" value="true"/>
             <property name="allowMissingParamTags" value="true"/>
             <property name="allowMissingReturnTag" value="true"/>
-            <property name="allowMissingThrowsTags" value="true"/>
-            <property name="allowThrowsTagsForSubclasses" value="true"/>
-            <property name="allowUndeclaredRTE" value="true"/>
         </module>
 
         <!--
@@ -152,31 +155,6 @@
             <property name="severity" value="error"/>
         </module>
         <module name="UnusedImports"/>
-        <!--<module name="ImportOrder">-->
-        <!-- Checks for out of order import statements. -->
-        <!--<property name="severity" value="warning"/>-->
-        <!--<property name="groups" value="java,javax,org,net,com"/>-->
-        <!-- This ensures that static imports go first. -->
-        <!--<property name="option" value="top"/>-->
-        <!--<property name="tokens" value="STATIC_IMPORT, IMPORT"/>-->
-        <!--</module>-->
-
-        <!-- Length check -->
-        <module name="LineLength">
-            <!-- Checks if a line is too long. -->
-            <property name="max" value="${com.puppycrawl.tools.checkstyle.checks.sizes.LineLength.max}" default="150"/>
-            <property name="severity" value="error"/>
-
-            <!--
-              The default ignore pattern exempts the following elements:
-                - import statements
-                - long URLs inside comments
-            -->
-
-            <property name="ignorePattern"
-                      value="${com.puppycrawl.tools.checkstyle.checks.sizes.LineLength.ignorePattern}"
-                      default="^(package .*;\s*)|(import .*;\s*)|( *\* *https?://.*)$"/>
-        </module>
         <module name="MethodLength">
             <property name="tokens" value="METHOD_DEF"/>
             <property name="max" value="20"/>
@@ -344,18 +322,6 @@
             <property name="onCommentFormat" value="CHECKSTYLE\:ON ([\w\|]+)"/>
             <property name="checkFormat" value="$1"/>
         </module>
-        <module name="SuppressWarnings">
-            <property name="format" value="^((?!unchecked|deprecation|rawtypes|resource).)*$"/>
-            <message key="suppressed.warning.not.allowed"
-                     value="The warning ''{0}'' cannot be suppressed at this location.
-             Only few javac warnings are allowed to suppress.
-             If try to suppress checkstyle/pmd/..... violation please do this in their config file.
-             If you try to suppress IntelliJ IDEA inspection,
-             please use javadoc block tag @noinspection"
-            />
-        </module>
         <module name="SuppressWarningsHolder"/>
-        <!--<module name="SuppressWarningsFilter"/>-->
-        <!--<module name="SuppressWithPlainTextCommentFilter">-->
     </module>
 </module>

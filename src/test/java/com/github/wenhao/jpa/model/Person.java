@@ -21,22 +21,22 @@
  */
 package com.github.wenhao.jpa.model;
 
-import static javax.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.ALL;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "person")
@@ -54,7 +54,7 @@ public class Person {
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "id_card_id")
     private IdCard idCard;
-    @OneToMany(cascade = ALL)
+    @OneToMany(mappedBy = "person", cascade = ALL)
     private Set<Phone> phones = new HashSet<Phone>();
     @ManyToMany(cascade = ALL, fetch = FetchType.LAZY)
     private Set<Address> addresses = new HashSet<Address>();

@@ -34,9 +34,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Path;
 import java.util.List;
 import java.util.Set;
 
@@ -116,7 +116,7 @@ public class PredicateTest {
         // when
         Specification<Person> specification = Specifications.<Person>and()
                 .between("age", 10, 35)
-                .predicate(StringUtils.isNotBlank(jack.getName()), (Specification<Phone>) (root, query, cb) -> {
+                .predicate(StringUtils.isNotBlank(jack.getName()), (Specification<Person>) (root, query, cb) -> {
                     Join address = root.join("addresses", JoinType.LEFT);
                     return cb.equal(address.get("street"), "Chengdu");
                 })

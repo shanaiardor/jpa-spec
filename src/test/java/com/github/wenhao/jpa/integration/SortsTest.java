@@ -74,8 +74,8 @@ public class SortsTest {
         List<Person> persons = personRepository.findAll(specification, sort);
 
         // then
-        assertThat(persons.get(0)).isEqualToComparingFieldByField(eric);
-        assertThat(persons.get(1)).isEqualToComparingFieldByField(jack);
+        assertThat(persons.get(0)).usingRecursiveComparison().isEqualTo(eric);
+        assertThat(persons.get(1)).usingRecursiveComparison().isEqualTo(jack);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class SortsTest {
         List<Person> persons = personRepository.findAll(specification, sort);
 
         // then
-        assertThat(persons.get(0)).isEqualToComparingFieldByField(aaron);
-        assertThat(persons.get(2)).isEqualToComparingFieldByField(eric);
+        assertThat(persons.get(0)).usingRecursiveComparison().isEqualTo(aaron);
+        assertThat(persons.get(2)).usingRecursiveComparison().isEqualTo(eric);
     }
 }
